@@ -1,0 +1,38 @@
+#float-bar {
+	position: fixed;
+	right: 0;
+	bottom: 0;
+	min-width: 200px;
+	background-color: rgba(255, 255, 255, 0.8);
+}
+
+#contents {
+	border: 1px solid #000;
+	border-radius: 5px 0 0 5px;
+	padding: 5px;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+#contents h2,
+#contents h3,
+#contents h4,
+#contents h5,
+#contents h6 {
+	margin: 0;
+	padding: 0;
+	font-size: 12px;
+	font-weight: normal;
+}
+
+#contents h3 {
+	padding-left: 1em;
+}
+#contents h4 {
+	padding-left: 2em;
+}
+#contents h5 {
+	padding-left: 3em;
+}
+#contents h6 {
+	padding-left: 4em;
+}

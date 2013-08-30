@@ -1,0 +1,14 @@
+{
+  "name": "doc_server",
+  "description": "Parse Markdown syntax with node.js",
+  "version": "0.0.1",
+  "author": {
+    "name": "zhongzhi107"
+  },
+  "devDependencies": {
+    "node-markdown": "~0.1.1"
+  },
+  "engines": {
+    "node": ">=0.8.0"
+  }
+}
