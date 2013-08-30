@@ -1,13 +1,13 @@
 doc-httpd
 =========
 
->文档系统webserver
+>一个简单的markdown标签文档系统的web服务器。
 >
 >默认监听端口 8000
 >
 >markdown文件后缀为 `.md`
 >
->默认文档为 	`index.md`
+>默认文档为 `index.md`
 
 ##TODO
 
