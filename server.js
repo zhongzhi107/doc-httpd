@@ -16,15 +16,15 @@ String.prototype.endsWith = function(suffix) {
 };
 
 // set your document root
-var DOCUMENT_ROOT = '../doc_svn';
+var DOCUMENT_ROOT = '../doc-svn';
 var PORT = 8000;
 
 var http = require('http');
 var url = require('url');
 var path = require('path');
 var fs = require('fs');
-var md = require('./node_modules/node-markdown/lib/markdown.js').Markdown;
 var mime = require('./mime').types;
+var md = require('./node_modules/node-markdown/lib/markdown.js').Markdown;
 
 var server = http.createServer(function (request, response) {
     var pathname = url.parse(request.url).pathname;
@@ -62,6 +62,7 @@ var server = http.createServer(function (request, response) {
 							'Content-Type': contentType
 						});
 
+						//console.log(hljs());
 						var tpl = fs.readFileSync('./templates/page.tpl', 'binary');
 						response.write(tpl.toString().replace('{content}', md(file)), 'binary');
                     }

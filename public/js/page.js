@@ -18,6 +18,15 @@ Doc.init = function() {
 			if (!(pathname.endsWith('/index.md') || pathname.endsWith('/'))) {
 				Doc.createDocumentMap();
 			}
+
+			//console.log(SyntaxHighlighter);
+			if (SyntaxHighlighter) {
+				SyntaxHighlighter.config.tagName = 'code';
+				SyntaxHighlighter.defaults['toolbar'] = false;
+				SyntaxHighlighter.defaults['gutter'] = false;
+				$('pre>code').addClass('brush:js');
+				SyntaxHighlighter.all();
+			}
 		});
 };
 
