@@ -1,7 +1,7 @@
 doc-httpd
 =========
 
->一个简单的markdown标签文档系统的web服务器。
+>一个简单的markdown标签文档系统的web服务器，支持JavaScript代码高亮显示。
 >
 >默认监听端口 8000
 >
