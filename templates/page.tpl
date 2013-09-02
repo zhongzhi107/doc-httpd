@@ -4,10 +4,25 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" href="css/markdownpad-github.css" />
 <link rel="stylesheet" href="css/doc.css" />
+
+<script type="text/javascript" src="js/highlighter/shCore.js"></script>
+<script type="text/javascript" src="js/highlighter/shBrushJScript.js"></script>
+<link href="css/highlighter/shCore.css" rel="stylesheet" type="text/css" />
+<link href="css/highlighter/shThemeDefault.css" rel="stylesheet" type="text/css" />
+
 <title></title>
 </head>
 
 <body>
+
+<pre>
+<code class="brush:js">
+function foo()
+{
+}
+</code>
+</pre>
+
 
 <article>
 {content}
