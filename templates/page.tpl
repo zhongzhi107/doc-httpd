@@ -15,22 +15,12 @@
 
 <body>
 
-<pre>
-<code class="brush:js">
-function foo()
-{
-}
-</code>
-</pre>
-
-
 <article>
 {content}
 </article>
 
 <aside id="float-bar" style="display:none;">
-	<section id="contents">
-	</section>
+	<section id="contents"></section>
 	<section id="doc-info"></section>
 </aside>
 <script language="javascript" src="js/jquery.js"></script>
