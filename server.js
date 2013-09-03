@@ -29,18 +29,23 @@ var md = require('./node_modules/node-markdown/lib/markdown.js').Markdown;
 var server = http.createServer(function (request, response) {
     var pathname = url.parse(request.url).pathname;
 
-	// set default page
-	if (pathname.endsWith('/')) {
-		pathname += 'index.md';
-	}
+    // set default page
+    if (pathname.endsWith('/')) {
+        pathname += 'index.md';
+    }
 
-	var ext = path.extname(pathname);
-	ext = ext ? ext.slice(1) : 'unknown';
+    var ext = path.extname(pathname);
+    ext = ext ? ext.slice(1) : 'unknown';
 
-	var isMD = (ext == 'md');
+    var isMD = (ext == 'md');
+    var realPath = './public' + pathname;
 
-    var realPath = (isMD ? DOCUMENT_ROOT : './public') + pathname;
+    if (!fs.existsSync(realPath)) {
+        realPath = DOCUMENT_ROOT + pathname
+    }
+
     fs.exists(realPath, function (exists) {
+        //console.log('realPath: %s, exists: %s', realPath, exists, isMD, ext);
         if (!exists) {
             response.writeHead(404, {
                 'Content-Type': 'text/plain'
@@ -57,21 +62,21 @@ var server = http.createServer(function (request, response) {
                     response.end(err);
                 } else {
                     if (isMD) {
-						var contentType = mime[ext] || 'text/plain';
-						response.writeHead(200, {
-							'Content-Type': contentType
-						});
+                        var contentType = mime[ext] || 'text/plain';
+                        response.writeHead(200, {
+                            'Content-Type': contentType
+                        });
 
-						//console.log(hljs());
-						var tpl = fs.readFileSync('./templates/page.tpl', 'binary');
-						response.write(tpl.toString().replace('{content}', md(file)), 'binary');
+                        //console.log(hljs());
+                        var tpl = fs.readFileSync('./templates/page.tpl', 'binary');
+                        response.write(tpl.toString().replace('{content}', md(file)), 'binary');
                     }
-					else {
-						response.writeHead(200, {
-							'Content-Type': 'text/css'
-						});
-						response.write(file, 'binary');
-					}
+                    else {
+                        response.writeHead(200, {
+                            'Content-Type': 'text/css'
+                        });
+                        response.write(file, 'binary');
+                    }
                     response.end();
                 }
             });
