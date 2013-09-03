@@ -45,7 +45,6 @@ var server = http.createServer(function (request, response) {
     }
 
     fs.exists(realPath, function (exists) {
-        //console.log('realPath: %s, exists: %s', realPath, exists, isMD, ext);
         if (!exists) {
             response.writeHead(404, {
                 'Content-Type': 'text/plain'
