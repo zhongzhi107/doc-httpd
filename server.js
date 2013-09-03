@@ -3,77 +3,51 @@
  * @author zhongzhi
  */
 
-String.prototype.endsWith = function(suffix) {
-    return this.indexOf(suffix, this.length - suffix.length) !== -1;
-};
-
-// set your document root
-var DOCUMENT_ROOT = '../doc-svn';
-var PORT = 8000;
+ 'use strict';
 
 var http = require('http');
 var url = require('url');
 var path = require('path');
 var fs = require('fs');
-var mime = require('./mime').types;
-var md = require('./node_modules/node-markdown/lib/markdown.js').Markdown;
+var config = require('./config').config;
+var util = require('./util');
 
 var server = http.createServer(function (request, response) {
+    var dirs = [config.documentRoot, './public'];
     var pathname = url.parse(request.url).pathname;
+    var realpath, ext;
+    var info = util.detectPath(dirs, pathname);
 
-    // set default page
-    if (pathname.endsWith('/')) {
-        pathname += 'index.md';
-    }
-
-    var ext = path.extname(pathname);
-    ext = ext ? ext.slice(1) : 'unknown';
-
-    var isMD = (ext == 'md');
-    var realPath = './public' + pathname;
-
-    if (!fs.existsSync(realPath)) {
-        realPath = DOCUMENT_ROOT + pathname
-    }
-
-    fs.exists(realPath, function (exists) {
-        if (!exists) {
-            response.writeHead(404, {
-                'Content-Type': 'text/plain'
-            });
-
-            response.write('This request URL ' + pathname + ' was not found on this server.');
-            response.end();
-        } else {
-            fs.readFile(realPath, 'binary', function (err, file) {
+    if (info.exist) {
+        if (info.isFile) {
+            fs.readFile(info.path, 'binary', function (err, file) {
                 if (err) {
-                    response.writeHead(500, {
-                        'Content-Type': 'text/plain'
-                    });
-                    response.end(err);
+                    // read file error
+                    util.response500(response, err);
                 } else {
-                    if (isMD) {
-                        var contentType = mime[ext] || 'text/plain';
-                        response.writeHead(200, {
-                            'Content-Type': contentType
-                        });
+                    ext = util.extname(pathname);
+                    switch (ext) {
+                        case config.mdExtensionName:
+                            util.responseMarkdown(response, file);
+                            break;
 
-                        var tpl = fs.readFileSync('./templates/page.tpl', 'binary');
-                        response.write(tpl.toString().replace('{content}', md(file)), 'binary');
+                        default:
+                            util.responseStatic(response, file, ext);
                     }
-                    else {
-                        response.writeHead(200, {
-                            'Content-Type': 'text/css'
-                        });
-                        response.write(file, 'binary');
-                    }
-                    response.end();
                 }
             });
+        } else {
+            // show file list page
+            util.responseDir(response, pathname);
         }
-    });
+
+    } else {
+        // 404 not found
+        util.response404(response, pathname);
+    }
+
 });
 
-server.listen(PORT);
-console.log('Server runing at port: ' + PORT + '.');
-console.log('document root: ' + DOCUMENT_ROOT);
+server.listen(config.port);
+console.log('Server runing at port: ' + config.port + '.');
+console.log('document root: ' + config.documentRoot);
