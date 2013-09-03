@@ -1,15 +1,7 @@
-//var md = require("./node_modules/node-markdown/lib/markdown.js").Markdown;
-//
-//var md_text = "**bold** *italic* [link](http://www.neti.ee) `code block`";
-//
-//console.log("--all");
-//console.log(md(md_text));
-//
-//console.log("--only <strong> and <code>")
-//console.log(md(md_text, true, 'strong|code'));
-//
-//console.log("--only <a> with _href_")
-//console.log(md(md_text, true, 'a', {a:'href'}));
+/**
+ * @license server.js 1.0.0 Copyright (c) 2013.
+ * @author zhongzhi
+ */
 
 String.prototype.endsWith = function(suffix) {
     return this.indexOf(suffix, this.length - suffix.length) !== -1;
@@ -66,7 +58,6 @@ var server = http.createServer(function (request, response) {
                             'Content-Type': contentType
                         });
 
-                        //console.log(hljs());
                         var tpl = fs.readFileSync('./templates/page.tpl', 'binary');
                         response.write(tpl.toString().replace('{content}', md(file)), 'binary');
                     }
