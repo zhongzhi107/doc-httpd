@@ -33,12 +33,12 @@ exports.getLine = function(filename, lineNo) {
  * @return {String} 标题
  */
 exports.getPageTitle = function(filename) {
-	var h1 = exports.getLine(filename, 0);
-	if (h1 !== '') {
-		var title = h1.replace(/^\s*#\s*/, '');
-	}
+    var h1 = exports.getLine(filename, 0);
+    if (h1 !== '') {
+        var title = h1.replace(/^\s*#\s*/, '');
+    }
 
-	return title;
+    return title;
 }
 
 
@@ -136,15 +136,16 @@ exports.responseDir = function(response, pathname) {
     var content = '';
     var tpl = fs.readFileSync('./templates/dir.tpl');
 
-	pathname = config.documentRoot + pathname;
+    // TODO: 增加安全性检查，防止读取webroot外的文件
+    pathname = config.documentRoot + pathname;
 
     // 遍历目录读取md文档（之前已经检查了路径存在且是目录）
     var files = fs.readdirSync(pathname);
     files.forEach(function(file) {
-		if (exports.endsWith(file, '.' + config.mdExtensionName)) {
+        if (exports.endsWith(file, '.' + config.mdExtensionName)) {
             // 只显示markdown文档
             var title = exports.getPageTitle(path.join(pathname, file));
-			content += '<li><a href="' + file + '">' + title + '</a></li>';
+            content += '<li><a href="' + file + '">' + title + '</a></li>';
         }
     });
 

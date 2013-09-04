@@ -7,7 +7,7 @@ doc-httpd
 >
 >markdown文件后缀为 `.md`
 >
->默认文档为 `index.md`
+>自动读取目录中的md生成列表页
 
 ##TODO
 
